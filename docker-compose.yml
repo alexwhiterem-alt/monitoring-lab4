@@ -14,10 +14,24 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=root
     volumes:
       - grafana_data:/var/lib/grafana
     restart: unless-stopped
 
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=monitoring
+      - POSTGRES_USER=monitor
+      - POSTGRES_PASSWORD=monitor123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
 volumes:
   grafana_data:
+  postgres_data:
