@@ -32,6 +32,18 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  sql_exporter:
+    image: burningalchemist/sql_exporter:latest
+    container_name: sql_exporter
+    ports:
+      - "9399:9399"
+    volumes:
+      - ./sql_exporter.yml:/etc/sql_exporter/sql_exporter.yml
+    command: ["--config.file=/etc/sql_exporter/sql_exporter.yml"]
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
 volumes:
   grafana_data:
   postgres_data:
