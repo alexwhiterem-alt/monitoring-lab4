@@ -28,9 +28,10 @@ collectors:
         values: [count]
         query: |
           SELECT COUNT(*) as count
-          FROM package_vulnerabilities
-          WHERE collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
-          AND UPPER(severity) = 'CRITICAL'
+          FROM package_vulnerabilities pv
+          JOIN vulnerabilities v ON pv.vuln_id = v.vuln_id
+          WHERE pv.collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
+          AND UPPER(v.severity) = 'CRITICAL'
 
       - metric_name: vulns_high
         type: gauge
@@ -38,9 +39,10 @@ collectors:
         values: [count]
         query: |
           SELECT COUNT(*) as count
-          FROM package_vulnerabilities
-          WHERE collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
-          AND UPPER(severity) = 'HIGH'
+          FROM package_vulnerabilities pv
+          JOIN vulnerabilities v ON pv.vuln_id = v.vuln_id
+          WHERE pv.collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
+          AND UPPER(v.severity) = 'HIGH'
 
       - metric_name: vulns_medium
         type: gauge
@@ -48,9 +50,10 @@ collectors:
         values: [count]
         query: |
           SELECT COUNT(*) as count
-          FROM package_vulnerabilities
-          WHERE collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
-          AND UPPER(severity) = 'MEDIUM'
+          FROM package_vulnerabilities pv
+          JOIN vulnerabilities v ON pv.vuln_id = v.vuln_id
+          WHERE pv.collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
+          AND UPPER(v.severity) = 'MEDIUM'
 
       - metric_name: vulns_low
         type: gauge
@@ -58,9 +61,10 @@ collectors:
         values: [count]
         query: |
           SELECT COUNT(*) as count
-          FROM package_vulnerabilities
-          WHERE collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
-          AND UPPER(severity) = 'LOW'
+          FROM package_vulnerabilities pv
+          JOIN vulnerabilities v ON pv.vuln_id = v.vuln_id
+          WHERE pv.collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
+          AND UPPER(v.severity) = 'LOW'
 
       - metric_name: vulns_total
         type: gauge
