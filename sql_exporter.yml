@@ -1,7 +1,6 @@
 global:
   scrape_timeout_offset: 500ms
   min_interval: 0s
-  cache_duration: 0s
 
 target:
   data_source_name: 'postgresql://monitor:monitor123@postgres:5432/monitoring?sslmode=disable'
