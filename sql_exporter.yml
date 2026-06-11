@@ -6,6 +6,7 @@ target:
   data_source_name: 'postgresql://monitor:monitor123@postgres:5432/monitoring?sslmode=disable'
   collectors:
     - packages_collector
+    - vulns_collector
 
 collectors:
   - collector_name: packages_collector
@@ -18,3 +19,16 @@ collectors:
           SELECT COUNT(*) as count
           FROM packages
           WHERE collected_at = (SELECT MAX(collected_at) FROM packages)
+
+  - collector_name: vulns_collector
+    metrics:
+      - metric_name: vulnerabilities_by_severity
+        type: gauge
+        help: Number of vulnerabilities by severity
+        values: [count]
+        labels: [severity]
+        query: |
+          SELECT severity, COUNT(*) as count
+          FROM package_vulnerabilities pv
+          WHERE collected_at = (SELECT MAX(collected_at) FROM package_vulnerabilities)
+          GROUP BY severity
