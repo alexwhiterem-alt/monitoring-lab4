@@ -5,22 +5,9 @@ global:
 target:
   data_source_name: 'postgresql://monitor:monitor123@postgres:5432/monitoring?sslmode=disable'
   collectors:
-    - os_collector
     - packages_collector
 
 collectors:
-  - collector_name: os_collector
-    metrics:
-      - metric_name: os_info
-        type: gauge
-        help: Latest OS information
-        values: [1]
-        query: |
-          SELECT name, version, arch, codename, 1 as value
-          FROM os_info
-          ORDER BY collected_at DESC
-          LIMIT 1
-
   - collector_name: packages_collector
     metrics:
       - metric_name: packages_total
